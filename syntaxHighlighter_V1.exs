@@ -20,7 +20,7 @@ defmodule Syntax do
       |> Stream.map(&helperFun/1)
 
     # Create an HTML file with the same base file name
-    {:ok, file} = File.open("#{base_file_name}.html", [:write])
+    {:ok, file} = File.open("highlighted_code/#{base_file_name}.html", [:write])
 
     IO.write(file, parse_html_header())
 
@@ -213,6 +213,6 @@ defmodule Syntax do
   end
 end
 
-Syntax.highlight("example1_OOP.py")
-Syntax.highlight("example2_Procedural.py")
-Syntax.highlight("example3_Functional.py")
+Syntax.highlight("python/example1_OOP.py")
+Syntax.highlight("python/example2_Procedural.py")
+Syntax.highlight("python/example3_Functional.py")
