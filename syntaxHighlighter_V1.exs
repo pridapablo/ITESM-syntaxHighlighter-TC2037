@@ -11,13 +11,16 @@ defmodule Syntax do
 
     stream = File.stream!(expanded_path)
 
-    # Using a stream to avoid reading the whole file into memory
+    # Extract the base file name (without extension)
+    base_file_name = Path.basename(expanded_path, ".py")
+
     highlighted_lines_stream =
       stream
       |> Stream.map(&String.trim_trailing/1)
       |> Stream.map(&helperFun/1)
 
-    {:ok, file} = File.open("06_FinalProject/example.html", [:write])
+    # Create an HTML file with the same base file name
+    {:ok, file} = File.open("#{base_file_name}.html", [:write])
 
     IO.write(file, parse_html_header())
 
@@ -77,7 +80,7 @@ defmodule Syntax do
           "keyword" ->
             acc =
               Regex.replace(
-                ~r/\b(def|if|else|elif|for|while|in|return)\b/,
+                ~r/\b(def|if|else|elif|for|while|in|return|import|from)\b/,
                 acc,
                 "<span class=\"keyword\">\\1</span>"
               )
@@ -147,7 +150,19 @@ defmodule Syntax do
         a when status in ["true", "false"] ->
           charDetector(tail, ["boolean" | list], "")
 
-        a when status in ["def", "if", "else", "elif", "for", "while", "in", "return"] ->
+        a
+        when status in [
+               "def",
+               "if",
+               "else",
+               "elif",
+               "for",
+               "while",
+               "in",
+               "return",
+               "import",
+               "from"
+             ] ->
           charDetector(tail, ["keyword" | list], "")
 
         " " ->
