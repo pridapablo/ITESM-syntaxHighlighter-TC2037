@@ -42,7 +42,7 @@ names = list<span class="parenthesis">(</span>map<span class="parenthesis">(</sp
 print<span class="parenthesis">(</span>f<span class="string">"Names: {names}"</span><span class="parenthesis">)</span>
 
 <span class="comment"># Use filter() to get data of people older than 30</span>
-older_than_<span class="number">30</span> = list<span class="parenthesis">(</span>filter<span class="parenthesis">(</span>lambda x: x[<span class="string">'age'</span>] > <span class="number">30</span>, loaded_data<span class="parenthesis">)</span><span class="parenthesis">)</span>
+older_than_<span class="number">30</span> = list<span class="parenthesis">(</span>filter<span class="parenthesis">(</span>lambda x: x[<span class="string">'age'</span>] <span class="number">30</span>, loaded_data<span class="parenthesis">)</span><span class="parenthesis">)</span>
 print<span class="parenthesis">(</span>f<span class="string">"People older than 30: {older_than_30}"</span><span class="parenthesis">)</span>
 
 <span class="comment"># Use reduce() to find the longest name</span>
