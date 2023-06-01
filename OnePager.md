@@ -1,31 +1,28 @@
-# OnePager.md
-
 ## Reflections on the Solution, Algorithms, and Execution Time
 
 This Elixir program is designed to provide syntax highlighting for Python files.
 It reads a Python file line by line using streams, identifies various language
 constructs, and outputs an HTML file with the syntax highlighted.
 
-Reflecting on the proposed solution, we can see that it is a good starting point
-for a syntax highlighter. It is a simple solution that uses many of the pros of
-using a functional programming language such as Elixir (stream, pattern
-matching, etc.). It is important to note that the highlighter is not a full
-parser and that that is its main limitation, since it doesn't handle language
-rules such as variable names. Regarding other limitations, we could talk about
-multiline comments, which are not supported by the highlighter, since its nature
-is to read the file line by line.
+Reflecting on the proposed solution, we see that it is a good starting point for
+a syntax highlighter. It is a simple solution that utilizes many of the
+advantages of using a functional programming language such as Elixir, including
+streams and pattern matching. It is important to note that the highlighter is
+not a full parser, which is its main limitation, as it doesn't handle language
+rules such as variable names. Another limitation is its inability to support
+multiline comments due to its nature of reading the file line by line.
 
 The execution time of the algorithm is largely determined by the size of the
-Python file being processed, but the worst case scenario would mean going
-through each line of code quite a few times (1 for the DFA and 12 for all
-Regex). However, because the processing is stream-based, it has a small memory
-footprint and can handle large files effectively.
+Python file being processed. The worst-case scenario involves going through each
+line of code numerous times, once for the DFA and 12 times for all regular
+expressions. However, because the processing is stream-based, it has a small
+memory footprint and can handle large files effectively.
 
-Given the previous reflections, we estimate that the code will have a time
-complexity of O(n\*m), where n is the number of lines in the Python file and m
-is the number of characters in each line. Nevertheless, we are quite confident
-that the complexity does not exceed O(n^n), since the algorithm does not have
-any nested loops or recursions.
+Given these reflections, we estimate that the code will have a time complexity
+of O(n\*m), where n is the number of lines in the Python file and m is the number
+of characters in each line. Nevertheless, we are confident that the complexity
+does not exceed O(n^n), as the algorithm does not have any nested loops or
+recursions.
 
 ## Algorithm Complexity
 
@@ -69,9 +66,9 @@ We can then analyze each step of the algorithm to determine its complexity:
   the line being processed.
 
 - The charDetector/3 iterates recursively through the input line, character by
-  character (complexity O(m)) to identify the language constructs.
+  character (complexity O(m)), to identify the language constructs.
 
-- All other functions have a time complexity of O(1), since they are used to
+- All other functions have a time complexity of O(1), as they are used to
   construct the output HTML with predetermined strings.
 
 ### Time Complexity Summary
@@ -116,20 +113,27 @@ significant impacts on individuals or society. However, like any software, it
 should be used responsibly. The code should be maintained to ensure its accuracy
 and reliability, and users should be made aware of any limitations.
 
-Furthermore, are many advantages to using a system that is able to modify the
+Furthermore, there are many advantages to using a system that can modify the
 colors of the text, but the most important is that it allows the user to have a
 better experience when reading the text. This not only helps a developer to have
 a better experience when reading and writing code, but it could also help people
-that suffer the several conditions such as dyslexia, color blindness, and other
+that suffer from several conditions such as dyslexia, color blindness, and other
 visual impairments. This kind of project allows us to understand how such a
-"simple" idea can have a huge impact in the world. Furthermore, by deciding to
+"simple" idea can have a huge impact on the world. Furthermore, by deciding to
 use a language that is commonly used for learning the basics of code, we could
-utilize this system, to some degree, for educational purposes. Such as oriented
+utilize this system, to some degree, for educational purposes, such as orienting
 new students in their first steps in the world of programming, by providing a
-tool that allows them to read, organize and comprehend their codes in a more
+tool that allows them to read, organize, and comprehend their codes in a more
 factual way.
 
 Moreover, this reflects on a broader ethical consideration about technology
 development. As we continue to develop tools that automate processes, it is
 critical to assess the potential implications it may have, such as job
 displacement, and consider measures to mitigate potential negative impacts.
+
+In conclusion, this project underscored the power of functional programming,
+optimizing memory usage and execution time. While there were some limitations
+and complexities, the experience helped us understand the balance between
+efficiency and functionality. Moving forward, the lessons learned here will
+influence how we approach future projects, emphasizing the importance of ethical
+considerations in software development.

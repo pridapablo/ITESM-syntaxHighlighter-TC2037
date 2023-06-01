@@ -6,6 +6,7 @@ defmodule Syntax do
   def highlight(file) do
     expanded_path = Path.expand(file)
 
+    # Check if the file exists
     IO.puts("Current directory: #{File.cwd!()}")
     IO.puts("Reading file: #{expanded_path}")
 
@@ -14,6 +15,7 @@ defmodule Syntax do
     # Extract the base file name (without extension)
     base_file_name = Path.basename(expanded_path, ".py")
 
+    # Create a stream of lines removing keeping leading whitespace for indentation
     highlighted_lines_stream =
       stream
       |> Stream.map(&String.trim_trailing/1)
@@ -22,13 +24,16 @@ defmodule Syntax do
     # Create an HTML file with the same base file name
     {:ok, file} = File.open("highlighted_code/#{base_file_name}.html", [:write])
 
+    # Add header with css styling
     IO.write(file, parse_html_header())
 
+    # Write each line of the highlighted code to the HTML file
     highlighted_lines_stream
     |> Enum.each(fn line ->
       IO.write(file, line <> "\n")
     end)
 
+    # Add footer
     IO.write(file, parse_html_footer())
 
     File.close(file)
@@ -37,8 +42,7 @@ defmodule Syntax do
   defp highlight_line(line, lst) do
     # Helper function to highlight a line of Python code using regex and output HTML.
 
-    IO.inspect(lst)
-
+    # Run the regex's in the order detected by the DFA, and wrap the matched text in a span HTML tag
     Enum.reduce(lst, line, fn element, acc ->
       new_line =
         case element do
@@ -105,14 +109,16 @@ defmodule Syntax do
       # Run the string regex first
       ["string" | list]
     else
+      # Run the regex's in the order detected by the DFA
       list
     end
   end
 
   defp charDetector([head | tail], list, status) do
-    # Function to detect the type of each character in a line of Python code to only run the
+    # (DFA) Function to detect the type of each character in a line of Python code to only run the
     # relevant regex on the line. This is to avoid running all regex on every line.
     case head do
+      # Detecting strings of more than one character
       a when status == "string" ->
         if status == "string" && a in ["\"", "\'"] do
           charDetector(tail, ["string" | list], "")
@@ -120,6 +126,7 @@ defmodule Syntax do
           charDetector(tail, list, "string")
         end
 
+      # Detecting strings
       a when a in ["\"", "\'"] ->
         if status == "string" && a in ["\"", "\'"] do
           charDetector(tail, ["string" | list], "")
@@ -127,29 +134,37 @@ defmodule Syntax do
           charDetector(tail, list, "string")
         end
 
+      # Detecting brackets, parenthesis, and braces
       a when a in ["{", "}", "(", ")", "[", "]"] ->
         charDetector(tail, ["parenthesis" | list], "")
 
+      # Detecting comments
       "#" ->
         charDetector([" "], ["comment" | list], "")
 
+      # Detecting digits
       a when a in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] ->
         charDetector(tail, ["number" | list], "")
 
+      # Detecting operators
       a when a in [":", ",", ";", "+", "-", "*", "/", "%", "^"] ->
         charDetector(tail, ["operator" | list], "")
 
+      # Detecting decorators
       "@" ->
         charDetector(tail, ["decorator" | list], "")
 
+      # Detecting methods
       "." ->
         if status != "" do
           charDetector(tail, ["method" | list], "")
         end
 
+      # Detecting booleans
       _a when status in ["true", "false"] ->
         charDetector(tail, ["boolean" | list], "")
 
+      # Detecting keywords
       _a
       when status in [
              "def",
@@ -165,9 +180,11 @@ defmodule Syntax do
            ] ->
         charDetector(tail, ["keyword" | list], "")
 
+      # Detecting spaces
       " " ->
         charDetector(tail, list, "")
 
+      # Otherwise, the token is plain text and we use status as an accumulator
       _ ->
         charDetector(tail, list, status <> head)
     end
@@ -211,7 +228,3 @@ defmodule Syntax do
     """
   end
 end
-
-Syntax.highlight("python_examples/example1_OOP.py")
-Syntax.highlight("python_examples/example2_Procedural.py")
-Syntax.highlight("python_examples/example3_Functional.py")
