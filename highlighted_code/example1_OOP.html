@@ -29,7 +29,7 @@ class Restaurant:
         self.<span class="method">reservations</span> = []
 
     <span class="keyword">def</span> reserve<span class="parenthesis">(</span>self, party_size<span class="parenthesis">)</span>:
-        <span class="keyword">if</span> self.<span class="method">available_seats</span><span class="parenthesis">(</span><span class="parenthesis">)</span> < party_size:
+        <span class="keyword">if</span> self.<span class="method">available_seats</span><span class="parenthesis">(</span><span class="parenthesis">)</span>  party_size:
             <span class="keyword">return</span> False
         else:
             self.<span class="method">reservations</span>.<span class="method">append</span><span class="parenthesis">(</span>party_size<span class="parenthesis">)</span>

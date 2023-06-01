@@ -46,7 +46,7 @@ older_than_<span class="number">30</span> = list<span class="parenthesis">(</spa
 print<span class="parenthesis">(</span>f<span class="string">"People older than 30: {older_than_30}"</span><span class="parenthesis">)</span>
 
 <span class="comment"># Use reduce() to find the longest name</span>
-longest_name = reduce<span class="parenthesis">(</span>lambda a, b: a <span class="keyword">if</span> len<span class="parenthesis">(</span>a[<span class="string">'name'</span>]<span class="parenthesis">)</span> > len<span class="parenthesis">(</span>b[<span class="string">'name'</span>]<span class="parenthesis">)</span> <span class="keyword">else</span> b, loaded_data<span class="parenthesis">)</span>
+longest_name = reduce<span class="parenthesis">(</span>lambda a, b: a <span class="keyword">if</span> len<span class="parenthesis">(</span>a[<span class="string">'name'</span>]<span class="parenthesis">)</span>  len<span class="parenthesis">(</span>b[<span class="string">'name'</span>]<span class="parenthesis">)</span> <span class="keyword">else</span> b, loaded_data<span class="parenthesis">)</span>
 print<span class="parenthesis">(</span>f<span class="string">"Person with the longest name: {longest_name[<span class="string">'name'</span>]}"</span><span class="parenthesis">)</span>
 </pre>
 </body>

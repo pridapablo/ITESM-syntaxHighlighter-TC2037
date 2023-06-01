@@ -35,10 +35,7 @@ defmodule Syntax do
   end
 
   defp highlight_line(line, lst) do
-    # Helper function to highlight a line of Python code using regex and output HTML. Issues:
-    # - "/" and "=" is matching escaped characters, so it is not an operator currently.
-    # - keyword "class" is not implemented because it will match "class" in the html tag.
-    # - Multiline strings don't seem to work.
+    # Helper function to highlight a line of Python code using regex and output HTML.
 
     IO.inspect(lst)
 
@@ -102,75 +99,77 @@ defmodule Syntax do
     highlight_line(line, Enum.uniq(charDetector(String.graphemes(line <> " "), [], "")))
   end
 
+  defp charDetector([head | tail], list, _status) when tail == [] do
+    # Pattern match for the end of the line.
+    if Enum.member?(list, "string") do
+      # Run the string regex first
+      ["string" | list]
+    else
+      list
+    end
+  end
+
   defp charDetector([head | tail], list, status) do
     # Function to detect the type of each character in a line of Python code to only run the
     # relevant regex on the line. This is to avoid running all regex on every line.
-    if tail == [] do
-      if Enum.member?(list, "string") do
-        ["string" | list]
-      else
-        list
-      end
-    else
-      case head do
-        a when status == "string" ->
-          if status == "string" && a in ["\"", "\'"] do
-            charDetector(tail, ["string" | list], "")
-          else
-            charDetector(tail, list, "string")
-          end
+    case head do
+      a when status == "string" ->
+        if status == "string" && a in ["\"", "\'"] do
+          charDetector(tail, ["string" | list], "")
+        else
+          charDetector(tail, list, "string")
+        end
 
-        a when a in ["\"", "\'"] ->
-          if status == "string" && a in ["\"", "\'"] do
-            charDetector(tail, ["string" | list], "")
-          else
-            charDetector(tail, list, "string")
-          end
+      a when a in ["\"", "\'"] ->
+        if status == "string" && a in ["\"", "\'"] do
+          charDetector(tail, ["string" | list], "")
+        else
+          charDetector(tail, list, "string")
+        end
 
-        a when a in ["{", "}", "(", ")", "[", "]"] ->
-          charDetector(tail, ["parenthesis" | list], "")
+      a when a in ["{", "}", "(", ")", "[", "]"] ->
+        charDetector(tail, ["parenthesis" | list], "")
 
-        "#" ->
-          charDetector([" "], ["comment" | list], "")
+      "#" ->
+        charDetector([" "], ["comment" | list], "")
 
-        a when a in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] ->
-          charDetector(tail, ["number" | list], "")
+      a when a in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] ->
+        charDetector(tail, ["number" | list], "")
 
-        a when a in [":", ",", ";", "+", "-", "*", "/", "%", "^"] ->
-          charDetector(tail, ["operator" | list], "")
+      a when a in [":", ",", ";", "+", "-", "*", "/", "%", "^"] ->
+        charDetector(tail, ["operator" | list], "")
 
-        "@" ->
-          charDetector(tail, ["decorator" | list], "")
+      "@" ->
+        charDetector(tail, ["decorator" | list], "")
 
-        "." ->
-          if status != "" do
-            charDetector(tail, ["method" | list], "")
-          end
+      "." ->
+        if status != "" do
+          charDetector(tail, ["method" | list], "")
+        end
 
-        a when status in ["true", "false"] ->
-          charDetector(tail, ["boolean" | list], "")
+      _a when status in ["true", "false"] ->
+        charDetector(tail, ["boolean" | list], "")
 
-        a
-        when status in [
-               "def",
-               "if",
-               "else",
-               "elif",
-               "for",
-               "while",
-               "in",
-               "return",
-               "import",
-               "from"
-             ] ->
-          charDetector(tail, ["keyword" | list], "")
+      _a
+      when status in [
+             "def",
+             "if",
+             "else",
+             "elif",
+             "for",
+             "while",
+             "in",
+             "return",
+             "import",
+             "from"
+           ] ->
+        charDetector(tail, ["keyword" | list], "")
 
-        " " ->
-          charDetector(tail, list, "")
+      " " ->
+        charDetector(tail, list, "")
 
-        _ ->
-          charDetector(tail, list, status <> head)
-      end
+      _ ->
+        charDetector(tail, list, status <> head)
     end
   end
 
