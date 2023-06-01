@@ -213,6 +213,6 @@ defmodule Syntax do
   end
 end
 
-Syntax.highlight("example1_OOP.py")
-Syntax.highlight("example2_Procedural.py")
-Syntax.highlight("example3_Functional.py")
+Syntax.highlight("python_examples/example1_OOP.py")
+Syntax.highlight("python_examples/example2_Procedural.py")
+Syntax.highlight("python_examples/example3_Functional.py")

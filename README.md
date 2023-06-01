@@ -2,6 +2,11 @@
 
 Syntax Highlighter for Python (Written in Elixir)
 
+Authored by:
+
+- Pablo Banzo Prida
+- Gabriel Rodriguez de los Reyes
+
 ## About
 
 This repository contains an Elixir program that reads a Python file, highlights its syntax, and outputs an HTML file with the highlighted syntax. The syntax highlighter recognizes Python language constructs such as strings, comments, keywords, numbers, operators, booleans, functions, parentheses, methods, and decorators.
@@ -28,15 +33,25 @@ git clone https://github.com/pridapablo/syntaxHighlighter.git
 cd syntaxHighlighter
 ```
 
-3. To run the syntax highlighter, use the following Elixir command in your terminal:
+3. Run the highlighter module.
+
+```bash
+iex syntaxHighlighter.exs
+```
+
+4. To highlight a python file, use the following Elixir command in your terminal (while in the iex session):
 
 ```elixir
 Syntax.highlight("<your-python-file.py>")
 ```
 
-Replace <your-python-file.py> with the name of the Python file you want to analyze. Note that the Python file must be in the root directory of the repository.
+Replace <your-python-file.py> with the name of the Python file you want to analyze. For example:
 
-The current repository contains three Python files that you can use to test the syntax highlighter:
+```elixir
+Syntax.highlight("python_examples/example1_OOP.py")
+```
+
+The current repository contains three Python files that you can use to test the syntax highlighter (all three files are in the python_examples/ directory)
 
 - example1_OOP.py
 - example2_Procedural.py
