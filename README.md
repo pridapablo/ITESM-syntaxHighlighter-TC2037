@@ -7,6 +7,8 @@ Authored by:
 - Pablo Banzo Prida
 - Gabriel Rodriguez de los Reyes
 
+Instructor for TC2037 (ITESM Course): Gilberto Echeverría Furió
+
 ## About
 
 This repository contains an Elixir program that reads a Python file, highlights its syntax, and outputs an HTML file with the highlighted syntax. The syntax highlighter recognizes Python language constructs such as strings, comments, keywords, numbers, operators, booleans, functions, parentheses, methods, and decorators.
