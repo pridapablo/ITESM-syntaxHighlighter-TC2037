@@ -9,6 +9,10 @@ Authored by:
 
 Instructor for TC2037 (ITESM Course): Gilberto Echeverría Furió
 
+## Live demo
+
+https://pridapablo.github.io/ITESM-syntaxHighlighter-TC2037/
+
 ## About
 
 This repository contains an Elixir program that reads a Python file, highlights its syntax, and outputs an HTML file with the highlighted syntax. The syntax highlighter recognizes Python language constructs such as strings, comments, keywords, numbers, operators, booleans, functions, parentheses, methods, and decorators.
@@ -21,47 +25,36 @@ This repository contains an Elixir program that reads a Python file, highlights 
 
 Please refer to the official [Elixir Installation Guide](https://elixir-lang.org/install.html) to set up Elixir on your machine.
 
-## Installation and Usage
+## Run locally
 
-1. Clone this repository to your local machine.
-
-```bash
-git clone https://github.com/pridapablo/syntaxHighlighter.git
-```
-
-2. Navigate to the repository folder.
+1. Clone this repository and enter it.
 
 ```bash
-cd syntaxHighlighter
+git clone https://github.com/pridapablo/ITESM-syntaxHighlighter-TC2037.git
+cd ITESM-syntaxHighlighter-TC2037
 ```
 
-3. Run the highlighter module.
+2. Start an `iex` session with the highlighter module loaded.
 
 ```bash
-iex syntaxHighlighter.exs
+iex syntaxHighlighter_V1.exs
 ```
 
-4. To highlight a python file, use the following Elixir command in your terminal (while in the iex session):
+3. Highlight a Python file from inside the `iex` session.
 
 ```elixir
-Syntax.highlight("<your-python-file.py>")
+Syntax.highlight("PythonFiles/example1_OOP.py")
 ```
 
-Replace <your-python-file.py> with the name of the Python file you want to analyze. For example:
+The output is written to `highlighted_code/<name>.html` (the `highlighted_code/` directory must exist in the directory you run from). Open that file in a browser.
 
-```elixir
-Syntax.highlight("python_examples/example1_OOP.py")
-```
-
-The current repository contains three Python files that you can use to test the syntax highlighter (all three files are in the python_examples/ directory)
+Three sample files are in `PythonFiles/`:
 
 - example1_OOP.py
 - example2_Procedural.py
 - example3_Functional.py
 
-4. The program will create an HTML file in the highlighted_code/ directory with the same base name as your Python file. For example, if your Python file was named example.py, the output file will be highlighted_code/example.html.
-
-5. Open the generated HTML file in your web browser to see the highlighted Python code.
+The pages in `docs/samples/` (served by the live demo) are the highlighter's output for those three files.
 
 ## One Pager Analysis
 
